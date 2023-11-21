@@ -1,23 +1,23 @@
-# KnowZe
+#TahuZe
 
-KnowZe adalah sebuah aplikasi backend berbasis monolith dengan RESTful API yang dibangun menggunakan Python dan Django Rest Framework. Aplikasi ini bertujuan untuk memberikan kemudahan bagi pengguna untuk membuat kursus (course) dengan mudah, kapan pun, dan di mana pun menggunakan perangkat smartphone mereka.
+KnowZe is a monolith-based backend application with a RESTful API built using Python and the Django Rest Framework. This application aims to make it easy for users to create courses easily, anytime and anywhere using their smartphone devices.
 
-## Deskripsi
+## Description
 
-Aplikasi ini didesain sebagai solusi all-in-one untuk pembuatan kursus yang memanfaatkan fitur-fitur RESTful API untuk:
-- **Generate Course**: Pengguna dapat membuat kursus dengan cepat dan mudah menggunakan endpoint yang disediakan. Aplikasi akan memproses input dari pengguna dan menghasilkan konten kursus secara otomatis berdasarkan permintaan yang diberikan.
+This application is designed as an all-in-one solution for course creation that leverages RESTful API features to:
+- **Generate Courses**: Users can create courses quickly and easily using the provided endpoints. The application will process input from the user and generate course content automatically based on the requests provided.
 
-## Fitur Utama
+## Main feature
 
-- **Generate Course**: Buat kursus dengan cepat dengan menggunakan endpoint tertentu.
+- **Generate Course**: Quickly create courses using specific endpoints.
 
-## Teknologi yang Digunakan
+## Technology Used
 
-- **Python**: Bahasa pemrograman utama aplikasi.
-- **Django Rest Framework (DRF)**: Framework untuk membangun RESTful API.
-- **Natural Language Processing (NLP)**: Penggunaan algoritma NLP untuk analisis entitas pada permintaan.
-- **SQLite/PostgreSQL**: Database yang digunakan untuk menyimpan data aplikasi.
+- **Python**: The application's main programming language.
+- **Django Rest Framework (DRF)**: A framework for building RESTful APIs.
+- **Natural Language Processing (NLP)**: Use of NLP algorithms for entity analysis on requests.
+- **SQLite/PostgreSQL**: Database used to store application data.
 
-## Cara Penggunaan
+## How to use
 
-Untuk menggunakan aplikasi ini, pastikan Anda telah memiliki Python terpasang dan lakukan instalasi dependensi dengan menjalankan:
+To use this application, make sure you have Python 3.11 installed and install the dependencies by running:
