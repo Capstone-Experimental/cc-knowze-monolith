@@ -1,4 +1,4 @@
-#KnowZe
+# KnowZe
 
 KnowZe is a monolith-based backend application with a RESTful API built using Python and the Django Rest Framework. This application aims to make it easy for users to create courses easily, anytime and anywhere using their smartphone devices.
 
