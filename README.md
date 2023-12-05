@@ -15,7 +15,6 @@ This application is designed as an all-in-one solution for course creation that 
 
 - **Python**: The application's main programming language.
 - **Django Rest Framework (DRF)**: A framework for building RESTful APIs.
-- **Natural Language Processing (NLP)**: Use of NLP algorithms for entity analysis on requests.
 - **SQLite/PostgreSQL**: Database used to store application data.
 
 ## How to use
