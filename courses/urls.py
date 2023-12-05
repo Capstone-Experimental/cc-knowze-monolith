@@ -15,8 +15,7 @@ urlpatterns = [
     
     # detail course
     path('course/<str:course_id>', DetailCourse.as_view(), name='update-course'),
-    
-    
+       
     # get all course feedback
     path('feedback', CourseFeedback.as_view(), name='feedback-course'),
     

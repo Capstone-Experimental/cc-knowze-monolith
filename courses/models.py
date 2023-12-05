@@ -3,7 +3,9 @@ import uuid
 
 class Course(models.Model):
     id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, primary_key=True)
-    user = models.ForeignKey('accounts.User', on_delete=models.CASCADE, related_name='courses')
+    # fix
+    # user = models.ForeignKey('accounts.User', on_delete=models.CASCADE, related_name='courses')
+    user = models.CharField(max_length=100)
     prompt = models.CharField(max_length=100)
     title = models.CharField(max_length=100)
     type_activity = models.CharField(max_length=100)
