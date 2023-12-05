@@ -7,6 +7,7 @@ from .models import User
 from .serializer import *
 from django.utils.decorators import method_decorator
 
+# unused
 @method_decorator(ratelimit(key='ip', rate='1/s', block=True), name='dispatch')
 class UserList(generics.ListAPIView):
     # @method_decorator(ratelimit(key=ip, rate='1/s' block=True))
@@ -15,6 +16,9 @@ class UserList(generics.ListAPIView):
     serializer_class = UserSerializer
 
 # Register Firebase
+
+
+# Inisialisasi Firebase Admin SDK dengan file credentials JSO
 
 class FirebaseRegisterViewset(mixins.CreateModelMixin,
                           mixins.RetrieveModelMixin,
@@ -30,17 +34,20 @@ class FirebaseRegisterViewset(mixins.CreateModelMixin,
 
 # End Register Firebase    
 
+# unused
 class UserRegistrationView(generics.CreateAPIView):
     permission_classes = [AllowAny]
     queryset = User.objects.all()
     serializer_class = UserRegisterSerializer
-    
+
+# unused
 class UserLoginView(generics.CreateAPIView):
     permission_classes = [AllowAny]
     queryset = User.objects.all()
     serializer_class = UserLoginSerializer
 
 
+# unused
 @method_decorator(ratelimit(key='ip', rate='2/m', block=True), name='dispatch')
 class ForgotPasswordView(generics.CreateAPIView):
     serializer_class = UserOTPSerializer
@@ -56,6 +63,7 @@ class ForgotPasswordView(generics.CreateAPIView):
         except User.DoesNotExist:
             return Response({"message" : "User not found"}, 404)
 
+# unused
 class VerifyOTPView(generics.CreateAPIView):
     serializer_class = UserOTPSerializer
     permission_classes = [AllowAny]
@@ -73,6 +81,7 @@ class VerifyOTPView(generics.CreateAPIView):
         except User.DoesNotExist:
             return Response({"message" : "User not found"}, 404)
 
+# unused
 class ChangePasswordView(generics.UpdateAPIView):
     serializer_class = UserOTPSerializer
     permission_classes = [AllowAny]
@@ -98,24 +107,32 @@ class ChangePasswordView(generics.UpdateAPIView):
 
 # @method_decorator(ratelimit(key='ip', rate='15/m', block=True), name='dispatch')
 class UserProfileView(generics.UpdateAPIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     # authentication_classes = [JWTAuthentication]
     queryset = User.objects.all()
     serializer_class = ProfileSerializer
     
     def get(self, request, *args, **kwargs):
-        user = request.user
-        img = user.img
-        username = user.username
-        email = user.email
-        return Response(
-            {
-                "img"       : img,
-                "username" : username,
-                "email"         : email,
-            }, 200
-        )
-            
+        id_token = request.META.get('HTTP_AUTHORIZATION').split(' ').pop()  # Mendapatkan token dari header
+
+        try:
+            decoded_token = auth.verify_id_token(id_token)
+            user_name = decoded_token.get('name')
+            picture = decoded_token.get('picture')
+            email = decoded_token.get('email')
+
+            return Response(
+                {
+                    "username" : user_name,
+                    "img"       : picture,
+                    "email"         : email,
+                }, 200
+            )
+        except auth.InvalidIdTokenError as e:
+            # Handle error jika token tidak valid
+            return Response({"error": "Invalid token"}, 401)
+        
+    # unused
     def update(self, request, *args, **kwargs):
         user = request.user
 
