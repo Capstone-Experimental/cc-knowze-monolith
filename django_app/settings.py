@@ -3,17 +3,17 @@ from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
 
-load_dotenv('.perbuatan')
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv()
+
+NGROK_HOST = os.getenv('NGROK_HOST')
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
-
 DEBUG = True
-
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')
+MODEL = os.environ.get('OPEN_AI_MODEL')
 AUTH_USER_MODEL = 'accounts.User'
+YT_API_KEY = os.environ.get('YT_API_KEY')
 OPENAI_API_KEY= os.environ.get('OPENAI_API_KEY_FINETUNING')
 
 INSTALLED_APPS = [
@@ -37,11 +37,15 @@ INSTALLED_APPS = [
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # 'firebase.authentication.TokenFirebase',
+        'courses.auth.FirebaseAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ]
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.IsAuthenticated',
+    # ]
 }
 
 MIDDLEWARE = [
@@ -80,7 +84,8 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
 
 CORS_ORIGIN_ALLOW_ALL = True
-
+CORS_ALLOWED_ORIGINS = [f"https://{NGROK_HOST}"]
+CSRF_TRUSTED_ORIGINS = [f"https://{NGROK_HOST}"]
 ROOT_URLCONF = 'django_app.urls'
 
 TEMPLATES = [
