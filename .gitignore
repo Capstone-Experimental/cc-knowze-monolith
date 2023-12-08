@@ -1,3 +1,15 @@
-*__pycache__
+*__pycache__*
+*env*
 env/
 .perbuatan
+staticfiles/
+doc/
+doc/token_github
+output/
+backup/
+gpt/finetuning.py
+util/finetuning_*
+util/ner_*
+util/cred.json
+util/test.py
+util/jsonload.py

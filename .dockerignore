@@ -1,0 +1,5 @@
+env/
+staticfiles/
+backup/
+doc/
+output/

@@ -1,0 +1,9 @@
+version: "3.7"
+services:
+  web:
+    build:
+      context: ./deployment
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8000:8000"
+    image: mono_knowze_be:v1
