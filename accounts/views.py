@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from .models import User
 from .serializer import *
 from django.utils.decorators import method_decorator
+from firebase_admin import auth
 
 # unused
 @method_decorator(ratelimit(key='ip', rate='1/s', block=True), name='dispatch')
@@ -20,17 +21,17 @@ class UserList(generics.ListAPIView):
 
 # Inisialisasi Firebase Admin SDK dengan file credentials JSO
 
-class FirebaseRegisterViewset(mixins.CreateModelMixin,
-                          mixins.RetrieveModelMixin,
-                          mixins.UpdateModelMixin,
-                          viewsets.GenericViewSet
-                          ):
-    queryset = User.objects.all()
-    serializer_class = FirebaseRegisterSerializer
-    authentication_classes = ()
+# class FirebaseRegisterViewset(mixins.CreateModelMixin,
+#                           mixins.RetrieveModelMixin,
+#                           mixins.UpdateModelMixin,
+#                           viewsets.GenericViewSet
+#                           ):
+#     queryset = User.objects.all()
+#     serializer_class = FirebaseRegisterSerializer
+#     authentication_classes = ()
     
-    def get_queryset(self):
-        return self.queryset.filter(pk=self.kwargs['pk'])
+#     def get_queryset(self):
+#         return self.queryset.filter(pk=self.kwargs['pk'])
 
 # End Register Firebase    
 

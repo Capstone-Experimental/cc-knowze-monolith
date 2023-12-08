@@ -1,16 +1,16 @@
-from django.urls import path, include
-from rest_framework_simplejwt.views import TokenRefreshView
-from rest_framework import routers
+from django.urls import path
+# from rest_framework_simplejwt.views import TokenRefreshView
+# from rest_framework import routers
 from .views import *
 
-app_name = 'accounts'
-router = routers.DefaultRouter()
+# app_name = 'accounts'
+# router = routers.DefaultRouter()
 
-router.register(r'firebase-register', FirebaseRegisterViewset, basename='firebase_register')
+# router.register(r'firebase-register', FirebaseRegisterViewset, basename='firebase_register')
 
 urlpatterns = [
     # virwset
-    path(r'', include(router.urls)),
+    # path(r'', include(router.urls)),
     
     # all users
     # path('users/', UserList.as_view(), name='users'),

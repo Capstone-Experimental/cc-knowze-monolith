@@ -17,35 +17,35 @@ class UserSerializer(serializers.ModelSerializer):
 
 ## Firebase Register
 
-from firebase.utils import check_token
-from firebase_admin import auth
+# from firebase.utils import check_token
+# from firebase_admin import auth
 
-class FirebaseRegisterSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(max_length=100)
-    img = serializers.ImageField(required=False)
+# class FirebaseRegisterSerializer(serializers.ModelSerializer):
+#     username = serializers.CharField(max_length=100)
+#     img = serializers.ImageField(required=False)
     
-    class Meta:
-        model = User
-        fields = ['username', 'email', 'img']
+#     class Meta:
+#         model = User
+#         fields = ['username', 'email', 'img']
         
-    def validate(self, data):
-        if User.objects.filter(email=data['email']).exists():
-            raise serializers.ValidationError("Email sudah terdaftar")
+#     def validate(self, data):
+#         if User.objects.filter(email=data['email']).exists():
+#             raise serializers.ValidationError("Email sudah terdaftar")
         
-        firebase_uid = check_token(self.context.get('request', None))
-        firebase_user = auth.get_user(firebase_uid)
-        print("user : ", firebase_user)
+#         firebase_uid = check_token(self.context.get('request', None))
+#         firebase_user = auth.get_user(firebase_uid)
+#         print("user : ", firebase_user)
         
-        try:
-            data['id'], created = User.objects.get_or_create(
-                id=firebase_user.uid,
-                # email=firebase_user.email,
-            )
-        except:
-            raise serializers.ValidationError(
-                {"detail": "id user dan phone number tidak cocok"})
+#         try:
+#             data['id'], created = User.objects.get_or_create(
+#                 id=firebase_user.uid,
+#                 # email=firebase_user.email,
+#             )
+#         except:
+#             raise serializers.ValidationError(
+#                 {"detail": "id user dan phone number tidak cocok"})
         
-        return data
+#         return data
     
 ## End Firebase Register
 
