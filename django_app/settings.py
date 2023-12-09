@@ -8,6 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv()
 
 NGROK_HOST = os.getenv('NGROK_HOST')
+CLOUD_RUN = os.getenv('CLOUD_RUN')
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 DEBUG = True
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')
@@ -82,8 +83,8 @@ EMAIL_PORT = os.environ.get('EMAIL_PORT')
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')  
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOWED_ORIGINS = [f"https://{NGROK_HOST}"]
-CSRF_TRUSTED_ORIGINS = [f"https://{NGROK_HOST}"]
+CORS_ALLOWED_ORIGINS = [f"https://{NGROK_HOST}", f"https://{CLOUD_RUN}"]
+CSRF_TRUSTED_ORIGINS = [f"https://{NGROK_HOST}", f"https://{CLOUD_RUN}"]
 ROOT_URLCONF = 'django_app.urls'
 
 TEMPLATES = [
