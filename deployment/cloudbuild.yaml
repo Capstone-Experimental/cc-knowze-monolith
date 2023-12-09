@@ -23,4 +23,4 @@ steps:
     args: ['run', 'deploy', 'knowze_web_prod', '--image', 'gcr.io/sonic-anagram-397306/knowze_web_monolith', '--region', 'us-central1', '--platform', 'managed', '--allow-unauthenticated']
 
 images:
-  - 'gcr.io/sonic-anagram-397306/knowze_web_monolith:v1'
+  - 'gcr.io/sonic-anagram-397306/knowze_web_monolith'
