@@ -4,18 +4,15 @@ steps:
       - 'secrets'
       - 'versions'
       - 'add'
-      - --secret='env-knowze'
-      - --version='latest'
+      - 'env-knowze'
       - --data-file='.env'
 
   - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'bash'
     args:
       - 'secrets'
       - 'versions'
       - 'add'
-      - --secret='firabase-credential'
-      - --version='latest'
+      - 'firabase-credential'
       - --data-file='utils/cred.json'
 
   - name: 'gcr.io/cloud-builders/docker'
