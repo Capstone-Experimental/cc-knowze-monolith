@@ -20,7 +20,7 @@ steps:
     args: ['push', 'gcr.io/sonic-anagram-397306/knowze_web_monolith']
 
   - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['run', 'deploy', 'knowze_web_prod', '--image', 'gcr.io/sonic-anagram-397306/knowze_web_monolith', '--region', 'us-central1', '--platform', 'managed', '--allow-unauthenticated']
+    args: ['run', 'deploy', 'knowze-web-prod', '--image', 'gcr.io/sonic-anagram-397306/knowze_web_monolith', '--region', 'us-central1', '--platform', 'managed', '--allow-unauthenticated']
 
 images:
   - 'gcr.io/sonic-anagram-397306/knowze_web_monolith'
