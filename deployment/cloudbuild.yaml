@@ -14,7 +14,7 @@ steps:
         gcloud secrets versions access latest --secret="firebase-credentials" --project="sonic-anagram-397306" --format='get(payload.data)' | base64 -d > util/cred.json
 
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/sonic-anagram-397306/knowze_web_monolith', '-f', 'Dockerfile.prod', '.']
+    args: ['build', '-t', 'gcr.io/sonic-anagram-397306/knowze_web_monolith', '-f', 'deployment/Dockerfile.prod', '.']
 
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/sonic-anagram-397306/knowze_web_monolith']
