@@ -5,7 +5,7 @@ steps:
       - 'versions'
       - 'add'
       - 'env-knowze'
-      - --data-file='.env'
+      - --data-file='app/.env'
 
   - name: 'gcr.io/cloud-builders/gcloud'
     args:
@@ -13,7 +13,7 @@ steps:
       - 'versions'
       - 'add'
       - 'firabase-credential'
-      - --data-file='utils/cred.json'
+      - --data-file='app/utils/cred.json'
 
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/sonic-anagram-397306/knowze_web_monolith', 'deployment']
