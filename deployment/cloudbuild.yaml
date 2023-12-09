@@ -1,7 +1,7 @@
 steps:
   - name: 'gcr.io/cloud-builders/gcloud'
     args:
-      - 'secret'
+      - 'secrets'
       - 'versions'
       - 'add'
       - --secret='env-knowze'
@@ -11,7 +11,7 @@ steps:
   - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: 'bash'
     args:
-      - 'secret'
+      - 'secrets'
       - 'versions'
       - 'add'
       - --secret='firabase-credential'
