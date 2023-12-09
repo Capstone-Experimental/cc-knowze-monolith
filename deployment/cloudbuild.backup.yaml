@@ -7,25 +7,30 @@ steps:
       - --secret='env-knowze'
       - --version='latest'
       - --data-file='.env'
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gcloud secrets versions access latest --secret="env-knowze" --project="sonic-anagram-397306" --format='get(payload.data)' | base64 -d > .env
 
   - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: 'bash'
     args:
-      - 'secretmanager'
-      - 'versions'
-      - 'add'
-      - --secret='firabase-credential'
-      - --version='latest'
-      - --data-file='utils/cred.json'
+      - '-c'
+      - |
+        gcloud secrets versions access latest --secret="firebase-credentials" --project="sonic-anagram-397306" --format='get(payload.data)' | base64 -d > util/cred.json
 
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/sonic-anagram-397306/knowze_web_monolith', 'deployment']
 
+  # Push Docker 
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/sonic-anagram-397306/knowze_web_monolith']
 
+  # Deploy 
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['run', 'deploy', 'knowze_web_prod', '--image', 'gcr.io/sonic-anagram-397306/knowze_web_monolith', '--region', 'us-central1', '--platform', 'managed', '--allow-unauthenticated']
 
 images:
-  - 'gcr.io/sonic-anagram-397306/knowze_web_monolith:v1'
+  - 'gcr.io/sonic-anagram-397306/knowze_web_monolith'
