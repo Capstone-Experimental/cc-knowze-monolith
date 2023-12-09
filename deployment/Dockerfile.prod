@@ -14,4 +14,4 @@ RUN python3 -m pip install --upgrade pip
 RUN pip install -r requirements.txt
 RUN python manage.py collectstatic --noinput
 
-CMD ["gunicorn", "-c", "gunicorn_config.py", "django_app.wsgi:application", "--preload"], 
+CMD ["gunicorn", "-c", "deployment/gunicorn_config.py", "django_app.wsgi:application", "--preload"], 
