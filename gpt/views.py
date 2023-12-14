@@ -13,17 +13,22 @@ from .intro import get_intros
 from .brain import get_completion2
 from .ner import detect_entities
 from .models import Keyword
-from .recommendation import append_data_to_csv_in_gcs, retrain_model_and_upload, get_recommendations
-# from .sentiment import SentimentAnalyzer
 from util.ratelimiter import MyDailyThrottle, MyMinuteThrottle
-import json
 from json.decoder import JSONDecodeError
-
+from dotenv import load_dotenv
 from courses.models import Course, Subtitle, Content, Steps, Feedback
 from firebase_admin import auth
+# from .recommendation import append_data_to_csv_in_gcs, retrain_model_and_upload, get_recommendations
+# from .sentiment import SentimentAnalyzer
+
+import os
+import requests
+import json
+
+load_dotenv()
 
 class Generate(APIView):
-    throttle_classes = [MyMinuteThrottle, MyDailyThrottle]
+    # throttle_classes = [MyMinuteThrottle, MyDailyThrottle]
 
     def post(self, request, format=None):
         id_token = request.META.get('HTTP_AUTHORIZATION').split(' ').pop()  # Mendapatkan token dari header
@@ -108,8 +113,8 @@ class Generate(APIView):
                             text=step,
                             content=content_instance
                         )
-                append_data_to_csv_in_gcs('go-mono', 'csv/data_recom.csv', prompt, type_activity, theme_activity, desc)      
-                retrain_model_and_upload('go-mono', 'csv/data_recom.csv', 'model/recom-v1.pkl')
+                # append_data_to_csv_in_gcs('go-mono', 'csv/data_recom.csv', prompt, type_activity, theme_activity, desc)      
+                # retrain_model_and_upload('go-mono', 'csv/data_recom.csv', 'model/recom-v1.pkl')
                 # with open('csv/data_recom.csv', 'a') as f:
                 #     f.write(f'{prompt},{type_activity},{theme_activity},{desc}\n')
             # print(json_obj)
@@ -190,30 +195,35 @@ class SentimentAnalysisView(generics.GenericAPIView):
 
 # Recommendation
 class RecommendationsAPIView(generics.GenericAPIView):
-    
-    # permission_classes = [IsAuthenticated]
-    
+        
     def get(self, request, *args, **kwargs):
         id_token = request.META.get('HTTP_AUTHORIZATION').split(' ').pop()
         try:
-        # last = Course.objects.filter(user=request.user).order_by('created_at').first().prompt
             decoded_token = auth.verify_id_token(id_token)
             uid = decoded_token.get('uid')
-            last = Course.objects.filter(user=uid).order_by('-created_at').first()
-            # print(len(Course.objects.filter(user=request.user)))
-            if not last:
+            last_course = Course.objects.filter(user=uid).order_by('-created_at').first()
+            if not last_course:
                 return Response({'recommendations': []})
-            last = last.prompt
-            print(last)
             
-            recommendations = get_recommendations(last)
-            return Response({'recommendations': recommendations})
+            last_prompt = last_course.prompt
+            print(last_prompt)
+            recommendations_url = os.getenv('RECOMMENDATION_SERVICE')
+        
+            payload = {"prompt": last_prompt}
+            headers = {'Content-Type': 'application/json'}
+            
+            response = requests.post(recommendations_url, json=payload, headers=headers)
+            
+            if response.status_code == 200:
+                recommendations = response.json()
+                return Response(recommendations)
+            else:
+                return Response({'recommendations': []})
+        
         except auth.InvalidIdTokenError as e:
             return Response({"error": "Invalid token"}, 401)
         except IndexError:
-            return Response({'recommendations': []})
-        # serializer = CourseSerializer(last, many=False)
-        # return Response(serializer.data, 200)
+            return Response({'recommendations': []})       
         
 # Intros
 class IntrosAPIView(generics.GenericAPIView):

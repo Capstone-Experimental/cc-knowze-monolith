@@ -7,6 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv()
 
+NGROK_LOCAL = "https://8c5f-103-169-9-45.ngrok-free.app"
 NGROK_HOST = os.getenv('NGROK_HOST')
 CLOUD_RUN = os.getenv('CLOUD_RUN')
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
@@ -83,8 +84,8 @@ EMAIL_PORT = os.environ.get('EMAIL_PORT')
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')  
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOWED_ORIGINS = [f"https://{NGROK_HOST}", f"https://{CLOUD_RUN}"]
-CSRF_TRUSTED_ORIGINS = [f"https://{NGROK_HOST}", f"https://{CLOUD_RUN}"]
+CORS_ALLOWED_ORIGINS = [f"https://{NGROK_HOST}", f"https://{CLOUD_RUN}", NGROK_LOCAL]
+CSRF_TRUSTED_ORIGINS = [f"https://{NGROK_HOST}", f"https://{CLOUD_RUN}", NGROK_LOCAL]
 ROOT_URLCONF = 'django_app.urls'
 
 TEMPLATES = [
@@ -114,12 +115,23 @@ DATABASES = {
 
 # DATABASES = {
 #     'default': {
-#         'ENGINE': os.environ.get('DB_DRIVER'),
-#         'USER': os.environ.get('DB_USER'),
-#         'PASSWORD':os.environ.get('DB_PASSWORD'),
-#         'NAME': os.environ.get('DB_NAME'),
-#         'PORT': os.environ.get('DB_PORT'),
-#         'HOST': os.environ.get('DB_HOST'),
+#         'ENGINE': os.environ.get('GCE_DB_DRIVER'),
+#         'USER': os.environ.get('GCE_DB_USER'),
+#         'PASSWORD':os.environ.get('GCE_DB_PASSWORD'),
+#         'NAME': os.environ.get('GCE_DB_NAME'),
+#         'PORT': os.environ.get('GCE_DB_PORT'),
+#         'HOST': os.environ.get('GCE_DB_HOST'),
+#     }
+# }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': os.environ.get('LOCAL_DB_DRIVER'),
+#         'USER': os.environ.get('LOCAL_DB_USER'),
+#         'PASSWORD':os.environ.get('LOCAL_DB_PASSWORD'),
+#         'NAME': os.environ.get('LOCAL_DB_NAME'),
+#         'PORT': os.environ.get('LOCAL_DB_PORT'),
+#         'HOST': os.environ.get('LOCAL_DB_HOST'),
 #     }
 # }
 
