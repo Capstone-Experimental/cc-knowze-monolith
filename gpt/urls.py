@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import *
 from .youtube import YoutubeAPIView
+from .news import *
 # from .sse import OpenAIStream
 
 urlpatterns = [
@@ -15,6 +16,12 @@ urlpatterns = [
     
     # put a feedback course
     path('feedback/<str:course_id>/', SentimentAnalysisView.as_view(), name='feedback-course'),
+    
+    # news view
+    path('trending-news', TrendingNewsView.as_view(), name='trending'),
+    
+    # scrap news
+    path('scrap-news', ScrapNewsView.as_view(), name='scrap'),
     
     # get video
     path('video/', YoutubeAPIView.as_view(), name='video'),

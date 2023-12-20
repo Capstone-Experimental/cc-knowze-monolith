@@ -8,7 +8,7 @@ class KeywordAdmin(admin.ModelAdmin):
 admin.site.register(Keyword, KeywordAdmin)
 
 class NewsAdmin(admin.ModelAdmin):
-    list_display = ('no', 'title', 'img_url')
-    list_editable = ('title', 'img_url')
+    list_display = ('title', 'img_url')
+    # list_editable = ('title', 'img_url')
     
 admin.site.register(News, NewsAdmin)
